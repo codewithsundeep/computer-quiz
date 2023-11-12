@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="🚀 Elevate Your Tech Game with the Ultimate Random Computer Quiz! 🧠💻
+  Embark on a thrilling journey through the digital realm and boost your tech prowess with our mind-bending Computer Quiz! 🌐🤓 Unleash your inner geek and challenge yourself with an array of random, intriguing questions that span the vast landscape of computer science.">
+  <title>Solve Computer Quizes To Improve Your Skills.</title>
+  <meta property="og:image" content="https://cdn.pixabay.com/photo/2018/01/17/07/06/laptop-3087585_1280.jpg" />
+  <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+rel="stylesheet"
+/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction:column;
+      background-image:url(https://cdn.pixabay.com/photo/2018/01/17/07/06/laptop-3087585_1280.jpg);
+      background-size:cover;
+      background-repeat:no-repeat;
+    }
+
+    #quiz-container {
+      max-width: 600px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #question {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    #options {
+      list-style: none;
+      padding: 0;
+    }
+
+    .option {
+      margin-bottom: 10px;
+    }
+
+    #score {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #next-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .modal-dialog,.modal-body{
+  width: 100% !important;
+  min-width:100% !important;
+  height: 100%;
+  min-height:100% !important;
+  margin: 0;
+  padding: 0;
+}
+.modal-content{
+    padding: 15px;
+}
+  </style>
+</head>
+<body>
+    <h1 style="width:100%;text-align:center;">Random Computer Quiz</h1>
+
+<div id="quiz-container">
+  <div id="question"></div>
+  <ul id="options"></ul>
+  <div id="score"></div>
+  <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+</div>
+<button id="oner" data-mdb-target="#modal" data-mdb-toggle="modal" style="display:none;"></button>
+<div id="modal" class="modal fade" style="width:100% !important;">
+    <div class="modal-dialog w-100" style="width:100% !important;">
+        <div class="modal-content w-100" style="width:100% !important;">
+            <div class="modal-header">
+<button id="dm" class="btn btn-close" data-mdb-dismiss="modal" style="display:none;"></button>
+<h2>Signup To Start Quiz</h2>
+            </div>
+            <div class="modal-body">
+                
+                <form id="m">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control mb-2" required>
+                    <label for="name">Phone Number</label>
+                    <input type="tel" class="form-control mb-2" required>
+                    <label for="name">Country</label>
+                    <input type="text" class="form-control mb-2" value="India" required>
+                    <button class="btn btn-primary rounded-pill" type="submit">Sign Up</button>
+                </form>
+                <br/>
+                <h2>🚀 Elevate Your Tech Knowledge with the Ultimate Random Computer Quiz! 🧠💻</h2>
+
+                <p>Embark on a thrilling journey through the digital realm and boost your tech prowess with our mind-bending <strong>Computer Quiz</strong>! 🌐🤓 Unleash your inner geek and challenge yourself with an array of random, intriguing questions that span the vast landscape of computer science.</p>
+              
+                <p>From coding conundrums to tech trivia, this quiz is your ticket to a knowledge-packed adventure. 🚁 Gear up to tackle algorithmic enigmas, traverse the binary wilderness, and decode the secrets of programming languages. 🤖💡</p>
+              
+                <p>Sharpen your skills, level up your understanding, and outsmart the digital challenges that lie ahead. Whether you're a coding prodigy or a tech enthusiast, this quiz is designed to fuel your curiosity and take your computer knowledge to new heights.</p>
+              
+                <p>Are you ready to test your mettle in the ever-evolving world of technology? Dive into the <span>Random Computer Quiz</span> and emerge as the tech wizard you were born to be! 🌟🔍 <a href="#" target="_blank">#TechTrivia</a> <a href="#" target="_blank">#CodeMaster</a> <a href="#" target="_blank">#GeekOut</a> <a href="#" target="_blank">#ChallengeAccepted</a></p>
+              
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    let api = "https://script.google.com/macros/s/AKfycbzB-PhY6rxUVLlX-ll-B3XP5lN3Q3JcZTkQo-ineqneGui9G8eLXFkn9mGcegpeQJRa4g/exec"
+    let dm = document.querySelector("#dm");
+    let form = document.querySelector("#m");
+    form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+        form[3].disabled=true
+        form[3].textContent="Submitting..."
+        fetch(api+"?name="+form[0].value+"&phone="+form[1].value).then(res=>res.text()).then(()=>{
+            swal("Success","You are now able to play computer quizes!","success").then(()=>{
+                dm.click()
+                localStorage.save = true;
+                form[3].disabled=false
+        form[3].textContent="Sign up"
+            })
+        }).catch(err=>{
+            swal("error","something went wrong please retry","error").then(()=>{
+
+                location.reload()
+            })
+        })
+    })
+    document.querySelector("#oner").click();
+  const apiUrl = 'https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple';
+  let currentQuestion = 0;
+  let score = 0;
+
+  async function fetchQuestions() {
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      return data.results;
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+    }
+  }
+let questions;
+  async function startQuiz() {
+     questions = await fetchQuestions();
+    showQuestion(questions[currentQuestion]);
+  }
+
+  function showQuestion(question) {
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const nextBtn = document.getElementById('next-btn');
+
+    questionElement.textContent = question.question;
+
+    optionsElement.innerHTML = '';
+    window.correct = question.correct_answer;
+    question.options = [...question.incorrect_answers, question.correct_answer];
+    question.options = question.options.sort(() => Math.random() - 0.5);
+
+    question.options.forEach((option, index) => {
+      const li = document.createElement('li');
+      li.className = 'option';
+      li.innerHTML = `<input type="radio" name="option" value="${option}" id="option${index + 1}" onchange="checkAnswer()">
+                      <label for="option${index + 1}">${option}</label>`;
+      optionsElement.appendChild(li);
+    });
+
+    nextBtn.style.display = 'none';
+  }
+
+  function checkAnswer() {
+    const selectedOption = document.querySelector('input[name="option"]:checked');
+    if (!selectedOption) return;
+
+    const userAnswer = selectedOption.getAttribute("value");
+    const correctAnswer = document.getElementById('question').innerText;
+    if (userAnswer === window.correct) {
+      score++;
+      document.querySelector("#score").innerHTML=`SCORE : ${score}`;
+      swal("Correct!","Score has been added!","success")
+    }else{
+        swal("Wrong Answer!",`Correct answer is ${window.correct}`,"error").then(()=>{
+            nextQuestion()
+        })
+    }
+
+    const nextBtn = document.getElementById('next-btn');
+    nextBtn.style.display = 'block';
+  }
+
+  function nextQuestion() {
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const scoreElement = document.getElementById('score');
+
+    currentQuestion++;
+
+    if (currentQuestion < 10) {
+      showQuestion(questions[currentQuestion]);
+    } else {
+      questionElement.textContent = 'Quiz completed!';
+      optionsElement.innerHTML = '<button onclick="location.reload();">Play Again</button>';
+      scoreElement.textContent = `Your score: ${score}/10`;
+      document.getElementById('next-btn').style.display = 'none';
+    }
+  }
+
+  // Start the quiz
+  startQuiz();
+
+  if(localStorage.save=='true'){
+    document.querySelector("body").classList.remove("modal-open");
+        document.querySelector("#modal").style.display="none";
+        document.querySelector(".modal-dialog").style.display="none";
+        document.querySelector(".modal-backdrop").style.display="none";
+    }
+</script>
+
+</body>
+</html>
